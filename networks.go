@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type layer []*neuron
 
 type network []layer
@@ -39,7 +37,6 @@ func (net network) GetOutputValues() []float64 {
 }
 
 func (net network) SetInput(inputs []float64) {
-	fmt.Println(len(inputs), len(net[0]))
 	for i := 0; i < min(len(inputs), len(net[0])); i++ {
 		net[0][i].value = inputs[i]
 	}

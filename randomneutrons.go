@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"math/rand"
-)
+import "math/rand"
 
 func init() {
 	rand.Seed(100)
@@ -35,7 +32,6 @@ func makeRandomLayer(length, inputLength int) layer {
 func MakeRandomNetwork(layerSizes []int) network {
 	n := make(network, len(layerSizes))
 	n[0] = make(layer, layerSizes[0])
-	fmt.Println(len(n[0]))
 	n.InitInput()
 	for i := 1; i < len(n); i++ {
 		n[i] = makeRandomLayer(layerSizes[i], layerSizes[i-1])
