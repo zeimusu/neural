@@ -37,11 +37,12 @@ func MakeWeightedNetwork(numInputs int, weights [][][]float64) network {
 	n[0] = make(layer, numInputs)
 	n.InitInput()
 	previousLayerSize := numInputs
-	for i := 0; i < len(n); i++ {
-		n[i], err = makeWeightLayer(weights[i], previousLayerSize)
+	for i := 0; i < len(weights); i++ {
+		n[i+1], err = makeWeightLayer(weights[i], previousLayerSize)
 		if err != nil {
 			log.Fatal(err)
 		}
+		previousLayerSize = len(weights[i])
 	}
 	return n
 }
