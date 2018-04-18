@@ -30,7 +30,7 @@ func randNetworkWeights(layerSizes []int) [][][]float64 {
 	return out
 }
 
-func MakeRandomSumNetwork(layerSizes []int) (Network, [][][]float32) {
+func MakeRandomSumNetwork(layerSizes []int) (Network, [][][]float64) {
 	weights := randNetworkWeights(layerSizes)
 	return MakeWeightedNetwork(layerSizes[0], weights), weights
 }
