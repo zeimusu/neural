@@ -1,39 +1,13 @@
-package main
+package neural
 
 import "testing"
 
-var layerWeights = [][]float64{
-	{0.2, 0.3},
-	{0, 0.5},
-	{2.1, 0},
-}
-
-var networkWeights = [][][]float64{
-	{
+func TestWeightLayer(t *testing.T) {
+	var layerWeights = [][]float64{
 		{0.2, 0.3},
 		{0, 0.5},
 		{2.1, 0},
-	},
-	{
-		{1.0, 2.0, 3.0},
-		{0, 1, 0},
-	},
-	{
-		{1, 1},
-	},
-}
-
-var smallNetWeights = [][][]float64{
-	{
-		{1, 1},
-		{1, -1},
-	},
-	{
-		{1, 1},
-	},
-}
-
-func TestWeightLayer(t *testing.T) {
+	}
 	testLayer, err := makeWeightLayer(layerWeights, 2)
 	if err != nil {
 		t.Errorf("makeWeightLayer returned unexpected error")
@@ -42,11 +16,34 @@ func TestWeightLayer(t *testing.T) {
 }
 
 func TestWeightNetword(t *testing.T) {
+	var networkWeights = [][][]float64{
+		{
+			{0.2, 0.3},
+			{0, 0.5},
+			{2.1, 0},
+		},
+		{
+			{1.0, 2.0, 3.0},
+			{0, 1, 0},
+		},
+		{
+			{1, 1},
+		},
+	}
 	testNet := MakeWeightedNetwork(2, networkWeights)
 	_ = testNet
 }
 
 func TestSmallNet(t *testing.T) {
+	var smallNetWeights = [][][]float64{
+		{
+			{1, 1},
+			{1, -1},
+		},
+		{
+			{1, 1},
+		},
+	}
 	smallNet := MakeWeightedNetwork(2, smallNetWeights)
 	smallNet.initInput()
 	/*
