@@ -31,9 +31,9 @@ weights =[
 
 */
 
-func MakeWeightedNetwork(numInputs int, weights [][][]float64) network {
+func MakeWeightedNetwork(numInputs int, weights [][][]float64) Network {
 	var err error
-	n := make(network, len(weights)+1)
+	n := make(Network, len(weights)+1)
 	n[0] = make(layer, numInputs)
 	n.initInput()
 	previousLayerSize := numInputs

@@ -30,12 +30,12 @@ func randNetworkWeights(layerSizes []int) [][][]float64 {
 	return out
 }
 
-func MakeRandomNetwork(layerSizes []int) network {
+func MakeRandomSumNetwork(layerSizes []int) (Network, [][][]float32) {
 	weights := randNetworkWeights(layerSizes)
-	return MakeWeightedNetwork(layerSizes[0], weights)
+	return MakeWeightedNetwork(layerSizes[0], weights), weights
 }
 
-func MakeRandomWeightedSumNeuron(length int) *neuron {
+func MakeRandomWeightedSumNeuron(length int) *Neuron {
 	weights := make([]float64, length)
 	for i := range weights {
 		weights[i] = rand.Float64()
@@ -43,7 +43,7 @@ func MakeRandomWeightedSumNeuron(length int) *neuron {
 	return MakeWeightedSumNeuron(weights)
 }
 
-func MakeRandomWeightedAvNeuron(length int) *neuron {
+func MakeRandomWeightedAvNeuron(length int) *Neuron {
 	weights := make([]float64, length)
 	for i := range weights {
 		weights[i] = rand.Float64()

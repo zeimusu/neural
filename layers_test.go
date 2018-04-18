@@ -6,19 +6,19 @@ import (
 )
 
 var inputLayer = layer{
-	&neuron{value: 0.3}, &neuron{value: 0.5}, &neuron{value: 0.7},
+	&Neuron{value: 0.3}, &Neuron{value: 0.5}, &Neuron{value: 0.7},
 }
 
 var twoSumsLayer = layer{
-	&neuron{f: sumInputs}, &neuron{f: sumInputs},
+	&Neuron{f: sumInputs}, &Neuron{f: sumInputs},
 }
 
 var sumAvLayer = layer{
-	&neuron{f: sumInputs}, &neuron{f: average},
+	&Neuron{f: sumInputs}, &Neuron{f: average},
 }
 
 var outputLayer = layer{
-	&neuron{f: sumInputs},
+	&Neuron{f: sumInputs},
 }
 
 func TestMakeInput(t *testing.T) {

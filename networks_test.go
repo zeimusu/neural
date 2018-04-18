@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var net = network{
+var net = Network{
 	inputLayer,
 	twoSumsLayer,
 	sumAvLayer,
@@ -29,7 +29,7 @@ func TestEvaluateNetwork(t *testing.T) {
 }
 
 func TestRandomNetwork(t *testing.T) {
-	n := MakeRandomNetwork([]int{2, 4, 4, 1})
+	n, _ := MakeRandomSumNetwork([]int{2, 4, 4, 1})
 	if len(n) != 4 {
 		t.Errorf("Network has wrong length, expected 4, got %v", len(n))
 	}

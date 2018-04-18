@@ -2,13 +2,13 @@ package neural
 
 import "fmt"
 
-type neuron struct {
+type Neuron struct {
 	f           func([]float64) float64
 	value       float64
 	description string
 }
 
-func (n *neuron) EvaluateNeuron(inputs []float64) {
+func (n *Neuron) EvaluateNeuron(inputs []float64) {
 	n.value = n.f(inputs)
 }
 
@@ -20,7 +20,7 @@ func min(a, b int) int {
 	}
 }
 
-func MakeWeightedSumNeuron(weights []float64) *neuron {
+func MakeWeightedSumNeuron(weights []float64) *Neuron {
 	f := func(inputs []float64) float64 {
 		total := 0.0
 		for i := 0; i < min(len(weights), len(inputs)); i++ {
@@ -28,11 +28,11 @@ func MakeWeightedSumNeuron(weights []float64) *neuron {
 		}
 		return total
 	}
-	return &neuron{f: f, value: 0,
+	return &Neuron{f: f, value: 0,
 		description: fmt.Sprintf("Weighted sum %v", weights)}
 }
 
-func MakeWeightedAvNeuron(weights []float64) *neuron {
+func MakeWeightedAvNeuron(weights []float64) *Neuron {
 	f := func(inputs []float64) float64 {
 		total := 0.0
 		length := min(len(weights), len(inputs))
@@ -44,11 +44,11 @@ func MakeWeightedAvNeuron(weights []float64) *neuron {
 		}
 		return total / float64(length)
 	}
-	return &neuron{f: f, value: 0,
+	return &Neuron{f: f, value: 0,
 		description: fmt.Sprintf("Weighted Av %v", weights)}
 }
 
-func MakeSigmoidNeuron(weights []float64, bias float64) *neuron {
+func MakeSigmoidNeuron(weights []float64, bias float64) *Neuron {
 	f := func(inputs []float64) float64 {
 		total := 0.0
 		length := min(len(weights), len(inputs))
@@ -60,11 +60,11 @@ func MakeSigmoidNeuron(weights []float64, bias float64) *neuron {
 		}
 		return sigma(total + bias)
 	}
-	return &neuron{f: f, value: 0,
+	return &Neuron{f: f, value: 0,
 		description: fmt.Sprintf("Sigmoid %v, bias %v", weights, bias)}
 }
 
-func MakePerceptron(weights []float64, bias float64) *neuron {
+func MakePerceptron(weights []float64, bias float64) *Neuron {
 	f := func(inputs []float64) float64 {
 		total := 0.0
 		length := min(len(weights), len(inputs))
@@ -79,11 +79,11 @@ func MakePerceptron(weights []float64, bias float64) *neuron {
 		}
 		return 0.
 	}
-	return &neuron{f: f, value: 0.,
+	return &Neuron{f: f, value: 0.,
 		description: fmt.Sprintf("Perceptron %v,bias %v", weights, bias),
 	}
 }
 
-func (n *neuron) String() string {
+func (n *Neuron) String() string {
 	return n.description
 }

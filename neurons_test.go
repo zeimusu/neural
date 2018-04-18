@@ -24,11 +24,11 @@ func average(inputs []float64) float64 {
 func TestEvaluateNeuron(t *testing.T) {
 	//setup
 	input1 := []float64{0.125, 0.25, 0.5}
-	testNeuron1 := neuron{
+	testNeuron1 := Neuron{
 		f:     sumInputs,
 		value: 0,
 	}
-	testNeuron2 := neuron{f: average}
+	testNeuron2 := Neuron{f: average}
 	//tests
 	testNeuron1.EvaluateNeuron(input1)
 	if testNeuron1.value != 0.875 {
@@ -45,7 +45,7 @@ func TestEvaluateNeuron(t *testing.T) {
 }
 
 func TestMakeWeightedSum(t *testing.T) {
-	neuron := MakeWeightedSumNeuron([]float64{0.5, 1, 2})
+	Neuron := MakeWeightedSumNeuron([]float64{0.5, 1, 2})
 	shortInput := []float64{2.0, 4.0}
 	midInput := []float64{2, 4, 6}
 	longInput := []float64{2, 4, 6, 8}
@@ -53,16 +53,16 @@ func TestMakeWeightedSum(t *testing.T) {
 	midExpect := 17.0
 	longExpect := 17.0
 
-	neuron.EvaluateNeuron(shortInput)
-	if neuron.value != shortExpect {
-		t.Errorf("short input test, expected %v, actual %v", shortExpect, neuron.value)
+	Neuron.EvaluateNeuron(shortInput)
+	if Neuron.value != shortExpect {
+		t.Errorf("short input test, expected %v, actual %v", shortExpect, Neuron.value)
 	}
-	neuron.EvaluateNeuron(midInput)
-	if neuron.value != midExpect {
-		t.Errorf("min input test, expected %v, actual %v", midExpect, neuron.value)
+	Neuron.EvaluateNeuron(midInput)
+	if Neuron.value != midExpect {
+		t.Errorf("min input test, expected %v, actual %v", midExpect, Neuron.value)
 	}
-	neuron.EvaluateNeuron(longInput)
-	if neuron.value != longExpect {
-		t.Errorf("long input test, expected %v, actual %v", longExpect, neuron.value)
+	Neuron.EvaluateNeuron(longInput)
+	if Neuron.value != longExpect {
+		t.Errorf("long input test, expected %v, actual %v", longExpect, Neuron.value)
 	}
 }
