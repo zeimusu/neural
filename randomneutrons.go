@@ -35,6 +35,15 @@ func MakeRandomSumNetwork(layerSizes []int) (Network, [][][]float64) {
 	return MakeWeightedNetwork(layerSizes[0], weights), weights
 }
 
+func MakeRandomSigmoid(layerSizes []int) (Network, [][][]float64, [][]float64) {
+	weights := randNetworkWeights(layerSizes)
+	biases := make([][]float64, len(layerSizes)-1)
+	for i := 1; i < len(layerSizes); i++ {
+		biases[i-1] = make([]float64, layerSizes[i])
+	}
+	return MakeSigmoidNetwork(layerSizes[0], weights, biases), weights, biases
+}
+
 func MakeRandomWeightedSumNeuron(length int) *Neuron {
 	weights := make([]float64, length)
 	for i := range weights {
