@@ -23,6 +23,16 @@ var networkWeights = [][][]float64{
 	},
 }
 
+var smallNetWeights = [][][]float64{
+	{
+		{1, 1},
+		{1, -1},
+	},
+	{
+		{1, 1},
+	},
+}
+
 func TestWeightLayer(t *testing.T) {
 	testLayer, err := makeWeightLayer(layerWeights, 2)
 	if err != nil {
@@ -36,21 +46,35 @@ func TestWeightNetword(t *testing.T) {
 	_ = testNet
 }
 
-/*
-func makeWeightLayer(weights [][]float64, prevLayerSize int) (layer, error)
-
-Each neuron has weights for each input: two inputs, 4, 4 ,1
-weights =[
- [..]   [....]   [[....]]
-[[..]],[[....]],
- [..]   [....]
- [..]   [....]
- ]
-
- len(weights)= number of hidden+output layers
- len(weights[0] = number of neurons in layer 1)
- weights[0][i] = weights for ith neuron in layer 1
-
-
-func MakeWeightedNetwork(numInputs int, weights [][][]float64) network
-*/
+func TestSmallNet(t *testing.T) {
+	smallNet := MakeWeightedNetwork(2, smallNetWeights)
+	smallNet.InitInput()
+	/*
+		    3   3.5     1.5
+			4   -0.5
+	*/
+	{
+		smallNet.SetInput([]float64{3, 4})
+		smallNet.EvaluateNetwork()
+		actual := smallNet.GetOutputValue()
+		expect := 1.5
+		if actual != expect {
+			t.Errorf("smallNet got %v, expected %v\n weights:\n^v",
+				actual, expect, smallNet)
+		}
+	}
+	/*
+		    2   2     1
+			2   0
+	*/
+	{
+		smallNet.SetInput([]float64{2, 2})
+		smallNet.EvaluateNetwork()
+		actual := smallNet.GetOutputValue()
+		expect := 1.
+		if actual != expect {
+			t.Errorf("smallNet got %v, expected %v\n weights:\n^v",
+				actual, expect, smallNet)
+		}
+	}
+}

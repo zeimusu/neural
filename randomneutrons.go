@@ -6,6 +6,35 @@ func init() {
 	rand.Seed(100)
 }
 
+func randList(length int, a, b float64) []float64 {
+	out := make([]float64, length)
+	for i := range out {
+		out[i] = rand.Float64()*(b-a) - a
+	}
+	return out
+}
+
+func randLayerWeights(numNeurons, numInputs int) [][]float64 {
+	out := make([][]float64, numNeurons)
+	for i := range out {
+		out[i] = randList(numInputs, -1, 1)
+	}
+	return out
+}
+
+func randNetworkWeights(layerSizes []int) [][][]float64 {
+	out := make([][][]float64, len(layerSizes)-1)
+	for i := 1; i < len(layerSizes); i++ {
+		out[i-1] = randLayerWeights(layerSizes[i], layerSizes[i-1])
+	}
+	return out
+}
+
+func MakeRandomNetwork(layerSizes []int) network {
+	weights := randNetworkWeights(layerSizes)
+	return MakeWeightedNetwork(layerSizes[0], weights)
+}
+
 func MakeRandomWeightedSumNeuron(length int) *neuron {
 	weights := make([]float64, length)
 	for i := range weights {
@@ -20,21 +49,4 @@ func MakeRandomWeightedAvNeuron(length int) *neuron {
 		weights[i] = rand.Float64()
 	}
 	return MakeWeightedAvNeuron(weights)
-}
-
-func makeRandomLayer(length, inputLength int) layer {
-	l := make(layer, length)
-	for i := range l {
-		l[i] = MakeRandomWeightedAvNeuron(inputLength)
-	}
-	return l
-}
-func MakeRandomNetwork(layerSizes []int) network {
-	n := make(network, len(layerSizes))
-	n[0] = make(layer, layerSizes[0])
-	n.InitInput()
-	for i := 1; i < len(n); i++ {
-		n[i] = makeRandomLayer(layerSizes[i], layerSizes[i-1])
-	}
-	return n
 }
