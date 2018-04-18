@@ -33,7 +33,7 @@ func TestEvaluateTwoSums(t *testing.T) {
 	if !reflect.DeepEqual(inputs, []float64{0.3, 0.5, 0.7}) {
 		t.Errorf("makeInput, expected %v, actual %v", []float64{0.3, 0.5, 0.7}, inputs)
 	}
-	twoSumsLayer.EvaluateLayer(inputLayer)
+	twoSumsLayer.evaluateLayer(inputLayer)
 	outputs := getValues(twoSumsLayer)
 	expected := []float64{1.5, 1.5}
 	if !reflect.DeepEqual(outputs, expected) {
@@ -42,7 +42,7 @@ func TestEvaluateTwoSums(t *testing.T) {
 }
 
 func TestSumAverage(t *testing.T) {
-	sumAvLayer.EvaluateLayer(inputLayer)
+	sumAvLayer.evaluateLayer(inputLayer)
 	outputs := getValues(sumAvLayer)
 	expected := []float64{1.5, 0.5}
 	if !reflect.DeepEqual(outputs, expected) {

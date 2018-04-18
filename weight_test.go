@@ -48,7 +48,7 @@ func TestWeightNetword(t *testing.T) {
 
 func TestSmallNet(t *testing.T) {
 	smallNet := MakeWeightedNetwork(2, smallNetWeights)
-	smallNet.InitInput()
+	smallNet.initInput()
 	/*
 		    3   3.5     1.5
 			4   -0.5

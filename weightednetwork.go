@@ -35,7 +35,7 @@ func MakeWeightedNetwork(numInputs int, weights [][][]float64) network {
 	var err error
 	n := make(network, len(weights)+1)
 	n[0] = make(layer, numInputs)
-	n.InitInput()
+	n.initInput()
 	previousLayerSize := numInputs
 	for i := 0; i < len(weights); i++ {
 		n[i+1], err = makeWeightLayer(weights[i], previousLayerSize)
