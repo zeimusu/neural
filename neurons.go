@@ -48,6 +48,22 @@ func MakeWeightedAvNeuron(weights []float64) *neuron {
 		description: fmt.Sprintf("Weighted Av %v", weights)}
 }
 
+func MakeSigmoidNeuron(weights []float64, bias float64) *neuron {
+	f := func(inputs []float64) float64 {
+		total := 0.0
+		length := min(len(weights), len(inputs))
+		if length == 0 {
+			return 0.0
+		}
+		for i := 0; i < length; i++ {
+			total += inputs[i] * weights[i]
+		}
+		return sigma(total + bias)
+	}
+	return &neuron{f: f, value: 0,
+		description: fmt.Sprintf("Sigmoid %v, bias %v", weights, bias)}
+}
+
 func (n *neuron) String() string {
-	return neuron.description
+	return n.description
 }
