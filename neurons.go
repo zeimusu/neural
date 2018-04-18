@@ -47,3 +47,7 @@ func MakeWeightedAvNeuron(weights []float64) *neuron {
 	return &neuron{f: f, value: 0,
 		description: fmt.Sprintf("Weighted Av %v", weights)}
 }
+
+func (n *neuron) String() string {
+	return neuron.description
+}
