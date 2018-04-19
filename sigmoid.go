@@ -21,6 +21,8 @@ func makeSigmoidLayer(weights [][]float64, biases []float64, prevLayerSize int) 
 	return l, nil
 }
 
+//MakeSigmoidNetwork creates a
+//network of sigmoid neurons from weights and biases
 func MakeSigmoidNetwork(numInputs int, weights [][][]float64, biases [][]float64) Network {
 	var err error
 	if len(weights) != len(biases) {

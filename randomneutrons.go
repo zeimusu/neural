@@ -49,7 +49,9 @@ func MakeRandomSigmoid(layerSizes []int) (Network, [][][]float64, [][]float64) {
 	return MakeSigmoidNetwork(layerSizes[0], weights, biases), weights, biases
 }
 
-func MakeRandomWeightedSumNeuron(length int) *Neuron {
+//MakeRandomWeightedSumNeuron makes a neuron that just dots inputs and
+//weights the weights are chosen at random.
+func makeRandomWeightedSumNeuron(length int) *Neuron {
 	weights := make([]float64, length)
 	for i := range weights {
 		weights[i] = rand.Float64()
@@ -57,7 +59,9 @@ func MakeRandomWeightedSumNeuron(length int) *Neuron {
 	return MakeWeightedSumNeuron(weights)
 }
 
-func MakeRandomWeightedAvNeuron(length int) *Neuron {
+//MakeRandomWeightedAvNeuron, Same as the sum neuron, but scaling the
+//result.
+func makeRandomWeightedAvNeuron(length int) *Neuron {
 	weights := make([]float64, length)
 	for i := range weights {
 		weights[i] = rand.Float64()
