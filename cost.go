@@ -17,6 +17,7 @@ func TotalCost(net Network, inputs, desired [][]float64) float64 {
 	c := 0.
 	for i, input := range inputs {
 		net.SetInput(input)
+		net.EvaluateNetwork()
 		output := net.GetOutputValues()
 		c += cost(output, desired[i])
 	}

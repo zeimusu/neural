@@ -2,7 +2,7 @@ package neural
 
 import "testing"
 
-func TestSigmoidNetword(t *testing.T) {
+func TestCost(t *testing.T) {
 	var networkWeights = [][][]float64{
 		{
 			{0.2, 0.3},
@@ -20,8 +20,8 @@ func TestSigmoidNetword(t *testing.T) {
 	}
 
 	var networkBias = [][]float64{
-		{0.5, 0.2, 0.1},
-		{2.2, -0.2},
+		{0., 0.2, 0.1},
+		{.2, -0.2},
 		{0.5, 0.5},
 	}
 	var inputs = [][]float64{
@@ -37,6 +37,6 @@ func TestSigmoidNetword(t *testing.T) {
 		{1, 0},
 	}
 	testNet := MakeSigmoidNetwork(2, networkWeights, networkBias)
-	actual := totalCost(testnet, inputs, desired)
+	actual := TotalCost(testNet, inputs, desired)
 	t.Logf("Actual cost %v\n", actual)
 }

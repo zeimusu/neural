@@ -26,16 +26,16 @@ func MakeSigmoidNetwork(numInputs int, weights [][][]float64, biases [][]float64
 	if len(weights) != len(biases) {
 		log.Fatalf("Lengths mismatch %v weights, %v biases", len(weights), len(biases))
 	}
-	n := make(Network, len(weights)+1)
-	n[0] = make(layer, numInputs)
-	n.initInput()
+	net := make(Network, len(weights)+1)
+	net[0] = make(layer, numInputs)
+	net.initInput()
 	previousLayerSize := numInputs
 	for i := 0; i < len(weights); i++ {
-		n[i+1], err = makeSigmoidLayer(weights[i], biases[i], previousLayerSize)
+		net[i+1], err = makeSigmoidLayer(weights[i], biases[i], previousLayerSize)
 		if err != nil {
 			log.Fatal(err)
 		}
 		previousLayerSize = len(weights[i])
 	}
-	return n
+	return net
 }
