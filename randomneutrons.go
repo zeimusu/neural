@@ -10,7 +10,7 @@ func init() {
 func randList(length int, a, b float64) []float64 {
 	out := make([]float64, length)
 	for i := range out {
-		out[i] = rand.Float64()*(b-a) - a
+		out[i] = rand.Float64()*(b-a) + a
 	}
 	return out
 }
