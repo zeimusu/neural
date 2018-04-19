@@ -13,6 +13,12 @@ func cost(outputs, desired []float64) float64 {
 	return total
 }
 
+func SingleCost(net Network, input, desired []float64) float64 {
+	net.SetInput(input)
+	net.EvaluateNetwork()
+	return cost(net.GetOutputValues(), desired)
+}
+
 func TotalCost(net Network, inputs, desired [][]float64) float64 {
 	c := 0.
 	for i, input := range inputs {

@@ -63,7 +63,7 @@ func MakeWeightedAvNeuron(weights []float64) *Neuron {
 //MakePerceptron
 //A perceptron dots its inputs with weights, then if i.w +bias >0 it
 //outputs 1, otherwise 0.
-func MakePerceptron(weights []float64, bias float64) *Neuron {
+func makePerceptron(weights []float64, bias float64) *Neuron {
 	f := func(inputs []float64) float64 {
 		total := 0.0
 		length := min(len(weights), len(inputs))
