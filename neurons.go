@@ -89,11 +89,7 @@ func makePerceptron(weights []float64, bias float64) *Neuron {
 func MakeSigmoidNeuron(weights []float64, bias float64) *Neuron {
 	f := func(inputs []float64) float64 {
 		total := 0.0
-		length := min(len(weights), len(inputs))
-		if length == 0 {
-			return 0.0
-		}
-		for i := 0; i < length; i++ {
+		for i := range weights {
 			total += inputs[i] * weights[i]
 		}
 		return sigma(total + bias)
