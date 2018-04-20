@@ -53,8 +53,9 @@ func TestShuffle(t *testing.T) {
 func TestDcdw(t *testing.T) {
 	inputs, desired := makeRandInputs()
 	_, weights, biases := MakeRandomSigmoid([]int{10, 4, 2})
-	gradient := dCdw(1, 2, 4, inputs[0:10], desired[0:10], weights, biases)
-	fmt.Println(gradient)
+	fmt.Println("testdcdw")
+	gradient := dCdw(0, 2, 4, inputs[0:10], desired[0:10], weights, biases)
+	fmt.Println("grad=", gradient)
 }
 
 /*
