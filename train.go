@@ -1,26 +1,38 @@
 package neural
 
-import (
-	"math/rand"
-	"reflect"
-)
+import "math/rand"
 
 //lets just assume sigmoidal neurons now and generalise later.
+
+func deepCopyWeights(newW [][][]float64, w [][][]float64) {
+	for i := range w {
+		newW[i] = make([][]float64, len(w[i]))
+		for j := range w[i] {
+			newW[i][j] = make([]float64, len(w[i][j]))
+			copy(newW[i][j], w[i][j])
+		}
+	}
+}
+func deepCopyBias(newB [][]float64, b [][]float64) {
+	for i := range b {
+		newB[i] = make([]float64, len(b[i]))
+		copy(newB[i], b[i])
+	}
+}
 
 func dCdw(layer, neuron, in int,
 	inputs, desired [][]float64,
 	weights [][][]float64, biases [][]float64,
 ) float64 {
-	epsilon := 0.01
-	weights[layer][neuron][in] += epsilon
-	net1 := MakeSigmoidNetwork(len(inputs), weights, biases)
-	weights[layer][neuron][in] -= 2 * epsilon
-	net2 := MakeSigmoidNetwork(len(inputs), weights, biases)
-	weights[layer][neuron][in] += epsilon
+	epsilon := 0.1
+	net := MakeSigmoidNetwork(len(inputs), weights, biases)
 	out := 0.0
 	for i := range inputs {
-		C1 := SingleCost(net1, inputs[i], desired[i])
-		C2 := SingleCost(net2, inputs[i], desired[i])
+		weights[layer][neuron][in] += epsilon
+		C1 := SingleCost(net, inputs[i], desired[i])
+		weights[layer][neuron][in] -= 2 * epsilon
+		C2 := SingleCost(net, inputs[i], desired[i])
+		weights[layer][neuron][in] += epsilon
 		out += (C1 - C2) / (2 * epsilon)
 	}
 	return out / float64(len(inputs))
@@ -30,16 +42,15 @@ func dCdb(layer, neuron int,
 	inputs, desired [][]float64, //typically about 10 in each list
 	weights [][][]float64, biases [][]float64,
 ) float64 {
-	epsilon := 0.01
-	biases[layer][neuron] += epsilon
-	net1 := MakeSigmoidNetwork(len(inputs), weights, biases)
-	biases[layer][neuron] -= 2 * epsilon
-	net2 := MakeSigmoidNetwork(len(inputs), weights, biases)
-	biases[layer][neuron] += epsilon
+	epsilon := 0.1
+	net := MakeSigmoidNetwork(len(inputs), weights, biases)
 	out := 0.0
 	for i := range inputs {
-		C1 := SingleCost(net1, inputs[i], desired[i])
-		C2 := SingleCost(net2, inputs[i], desired[i])
+		biases[layer][neuron] += epsilon
+		C1 := SingleCost(net, inputs[i], desired[i])
+		biases[layer][neuron] -= 2 * epsilon
+		C2 := SingleCost(net, inputs[i], desired[i])
+		biases[layer][neuron] += epsilon
 		out += (C1 - C2) / (2 * epsilon)
 	}
 	return out / float64(len(inputs))
@@ -47,13 +58,16 @@ func dCdb(layer, neuron int,
 
 //run a single epoch of training
 func TrainSig(inputs, desired [][]float64, weights [][][]float64, biases [][]float64) ([][][]float64, [][]float64) {
-	eta := 0.1
+	eta := 1.
 	batchSize := 10
+
 	shuffleInputs, shuffleDesired := shuffleInputsDesired(inputs, desired)
+
 	newWeights := make([][][]float64, len(weights))
-	reflect.Copy(reflect.ValueOf(newWeights), reflect.ValueOf(weights))
+	deepCopyWeights(newWeights, weights)
 	newBiases := make([][]float64, len(weights))
-	reflect.Copy(reflect.ValueOf(newBiases), reflect.ValueOf(biases))
+	deepCopyBias(newBiases, biases)
+
 	for i := 0; i < len(inputs)-batchSize; i += batchSize {
 		for l := range weights {
 			for n := range weights[l] {

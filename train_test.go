@@ -56,15 +56,47 @@ func TestDcdw(t *testing.T) {
 	fmt.Println("testdcdw")
 	gradient := dCdw(0, 2, 4, inputs[0:10], desired[0:10], weights, biases)
 	fmt.Println("grad=", gradient)
+	gradient = dCdw(0, 2, 4, inputs[10:20], desired[10:20], weights, biases)
+	fmt.Println("grad=", gradient)
+}
+func TestDcdb(t *testing.T) {
+	inputs, desired := makeRandInputs()
+	_, weights, biases := MakeRandomSigmoid([]int{10, 4, 2})
+	fmt.Println("testdcdb")
+	gradient := dCdb(0, 3, inputs[0:10], desired[0:10], weights, biases)
+	fmt.Println("grad=", gradient)
 }
 
-/*
 func TestTrain(t *testing.T) {
 	net, weights, biases := MakeRandomSigmoid([]int{10, 4, 2})
 	inputs, desired := makeRandInputs()
-
+	initialCost := TotalCost(net, inputs, desired)
+	newWeights, newBiases := TrainSig(inputs, desired, weights, biases)
+	fmt.Println("weights", weights)
+	fmt.Println("biase", biases)
+	fmt.Println("neweights", newWeights)
+	fmt.Println("newbiases", newBiases)
+	newnet := MakeSigmoidNetwork(10, newWeights, newBiases)
+	postCost := TotalCost(newnet, inputs, desired)
+	fmt.Println("costs", initialCost, postCost)
 }
 
+func TestIterateTrain(*testing.T) {
+	net, weights, biases := MakeRandomSigmoid([]int{10, 4, 2})
+	inputs, desired := makeRandInputs()
+	epochs := 30
+	var cost float64
+	for i := 0; i < epochs; i++ {
+		cost = TotalCost(net, inputs, desired)
+		fmt.Println(cost)
+		newW, newB := TrainSig(inputs, desired, weights, biases)
+		net = MakeSigmoidNetwork(10, newW, newB)
+	}
+	cost = TotalCost(net, inputs, desired)
+	fmt.Println("final cost", cost)
+}
+
+/*
 	var networkWeights = [][][]float64{
 		{
 			{0.2, 0.3},
