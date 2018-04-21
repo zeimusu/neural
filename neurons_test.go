@@ -46,23 +46,11 @@ func TestEvaluateNeuron(t *testing.T) {
 
 func TestMakeWeightedSum(t *testing.T) {
 	Neuron := MakeWeightedSumNeuron([]float64{0.5, 1, 2})
-	shortInput := []float64{2.0, 4.0}
 	midInput := []float64{2, 4, 6}
-	longInput := []float64{2, 4, 6, 8}
-	shortExpect := 5.0
 	midExpect := 17.0
-	longExpect := 17.0
 
-	Neuron.EvaluateNeuron(shortInput)
-	if Neuron.value != shortExpect {
-		t.Errorf("short input test, expected %v, actual %v", shortExpect, Neuron.value)
-	}
 	Neuron.EvaluateNeuron(midInput)
 	if Neuron.value != midExpect {
 		t.Errorf("min input test, expected %v, actual %v", midExpect, Neuron.value)
-	}
-	Neuron.EvaluateNeuron(longInput)
-	if Neuron.value != longExpect {
-		t.Errorf("long input test, expected %v, actual %v", longExpect, Neuron.value)
 	}
 }

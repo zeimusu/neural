@@ -12,6 +12,13 @@ type Neuron struct {
 	description string
 }
 
+func dot(a, b []float64) (product float64) {
+	for i := range a {
+		product += a[i] * b[i]
+	}
+	return
+}
+
 //EvaluateNeuron evaluates a neuron from its inputs, setting its value
 func (n *Neuron) EvaluateNeuron(inputs []float64) {
 	n.value = n.f(inputs)
@@ -31,11 +38,7 @@ func min(a, b int) int {
 //neuron
 func MakeWeightedSumNeuron(weights []float64) *Neuron {
 	f := func(inputs []float64) float64 {
-		total := 0.0
-		for i := 0; i < min(len(weights), len(inputs)); i++ {
-			total += inputs[i] * weights[i]
-		}
-		return total
+		return dot(inputs, weights)
 	}
 	return &Neuron{f: f, value: 0,
 		description: fmt.Sprintf("Weighted sum %v", weights)}
